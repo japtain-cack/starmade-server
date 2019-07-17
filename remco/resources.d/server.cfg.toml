@@ -1,0 +1,4 @@
+[[template]]
+  src = "${REMCO_TEMPLATE_DIR}/server.cfg"
+  dst = "${STARMADE_HOME}/server/StarMade/server.cfg"
+  mode = "0644"
