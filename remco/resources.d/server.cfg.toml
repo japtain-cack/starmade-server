@@ -1,6 +1,6 @@
 [[template]]
   src = "${REMCO_TEMPLATE_DIR}/server.cfg"
   dst = "${STARMADE_HOME}/server/StarMade/server.cfg"
-  make_directories = "true"
+  make_directories = true
   mode = "0644"
 
