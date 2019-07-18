@@ -26,7 +26,7 @@ RUN set -eux pipefail && \
     curl \
     gnupg2 \
     sudo \
-    openjdk-11-jdk-headless \
+    openjdk-8-jdk-headless \
     wget \
     git
 
