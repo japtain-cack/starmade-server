@@ -6,7 +6,7 @@ export REMCO_HOME=/etc/remco
 export REMCO_RESOURCE_DIR=${REMCO_HOME}/resources.d
 export REMCO_TEMPLATE_DIR=${REMCO_HOME}/templates
 
-remco -config ${REMCO_HOME}/config.toml
+remco
 
 cd /home/starmade/server && \
   wget -O StarMade-Starter.jar http://files.star-made.org/StarMade-Starter.jar && \
