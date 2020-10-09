@@ -2,22 +2,27 @@
 ##################################
 FROM golang
 
-ENV REMCO_VERSION v0.11.0
+ENV REMCO_VERSION v0.12.0
 
 # remco (lightweight configuration management tool) https://github.com/HeavyHorst/remco
 RUN go get github.com/HeavyHorst/remco/cmd/remco
 RUN cd $GOPATH/src/github.com/HeavyHorst/remco && \
-  git checkout ${REMCO_VERSION}
+    git checkout ${REMCO_VERSION}
 RUN go install github.com/HeavyHorst/remco/cmd/remco
 
 # Build base container
 ######################
 FROM ubuntu:bionic
+LABEL author="Nathan Snow"
+LABEL description="Starmade server with remco and auto updates"
+USER root
 
-ENV TINI_VERSION v0.18.0
 ENV DEBIAN_FRONTEND noninteractive
+ENV TINI_VERSION v0.19.0
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+
+ENV STARMADE_HOME /home/starmade
 
 RUN set -eux pipefail && \
   # Update and install packages
@@ -31,7 +36,7 @@ RUN set -eux pipefail && \
     git
 
 # Setup starmade user
-RUN adduser --shell /bin/bash --home /home/starmade --gecos "" --disabled-password starmade && \
+RUN adduser --shell /bin/bash --home ${STARMADE_HOME} --gecos "" --disabled-password starmade && \
   passwd -d starmade && \
   addgroup starmade sudo
 
@@ -47,9 +52,9 @@ COPY --chown=starmade:root remco /etc/remco
 RUN chmod -R 0775 etc/remco
 
 USER starmade
-WORKDIR /home/starmade
+WORKDIR ${STARMADE_HOME}
 
-VOLUME ["/home/starmade/server"]
+VOLUME ["${STARMADE_HOME}/server"]
 
 COPY --chown=starmade:starmade files/entrypoint.sh ./
 RUN chmod ug+x entrypoint.sh

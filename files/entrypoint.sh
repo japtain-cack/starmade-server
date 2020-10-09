@@ -8,12 +8,14 @@ export REMCO_TEMPLATE_DIR=${REMCO_HOME}/templates
 
 remco
 
-cd /home/starmade/server && \
+sudo chown -R starmade:starmade ${STARMADE_HOME}/
+
+cd ${STARMADE_HOME}/server && \
   wget -O StarMade-Starter.jar http://files.star-made.org/StarMade-Starter.jar && \
   java -jar ./StarMade-Starter.jar -nogui && \
 
-chown -R starmade:starmade /home/starmade && \
-  cd /home/starmade/server/StarMade && \
+chown -R starmade:starmade ${STARMADE_HOME} && \
+  cd ${STARMADE_HOME}/server/StarMade && \
   chmod ug+x ./StarMade-dedicated-server-linux.sh && \
   ./StarMade-dedicated-server-linux.sh
 

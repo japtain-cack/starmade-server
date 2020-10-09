@@ -9,7 +9,8 @@ try:
     lines = fh.readlines()
     for line in lines:
         match = regex.search(line)
-        data += (match.group(1) + " = {{ getenv(\"" + match.group(1) + "\", \"" + match.group(2) + "\") }} " + match.group(3) + "\n")
+        data += (match.group(1) + " = {{ getv(\"/starmade/" + match.group(1).replace("_", "-").lower() + "\", \"" + match.group(2) + "\") }} " + match.group(3) + "\n")
+        print(data)
 
   with open('server.cfg.new', 'w') as fh:
     fh.write(data)
