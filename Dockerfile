@@ -23,6 +23,8 @@ ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
 ENV STARMADE_HOME /home/starmade
+ENV STARMADE_UID=1000
+ENV STARMADE_GUID=1000
 
 RUN set -eux pipefail && \
   # Update and install packages
@@ -36,9 +38,10 @@ RUN set -eux pipefail && \
     git
 
 # Setup starmade user
-RUN adduser --shell /bin/bash --home ${STARMADE_HOME} --gecos "" --disabled-password starmade && \
-  passwd -d starmade && \
-  addgroup starmade sudo
+RUN groupadd -g $STARMADE_GUID starmade && \
+    useradd -s /bin/bash -d ${STARMADE_HOME} -m -u $STARMADE_UID -g starmade starmade && \
+    passwd -d starmade && \
+    echo "starmade ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/starmade
 
 # Add Tini (A tiny but valid init for containers) https://github.com/krallin/tini
 RUN wget -O /tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
