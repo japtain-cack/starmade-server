@@ -16,6 +16,4 @@ cd ${STARMADE_HOME}/server && \
 
 chown -R starmade:starmade ${STARMADE_HOME} && \
   cd ${STARMADE_HOME}/server/StarMade && \
-  chmod ug+x ./StarMade-dedicated-server-linux.sh && \
-  ./StarMade-dedicated-server-linux.sh
-
+  java -Xms128m -Xmx1024m -jar StarMade.jar -server
