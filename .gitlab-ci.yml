@@ -41,7 +41,9 @@ kube-score:
         --ignore-test statefulset-has-servicename - || true
 
 kicks:
-  image: checkmarx/kics:latest
+  image:
+    name: checkmarx/kics:latest
+    entrypoint: [""]
   stage: validate
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
